@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "c69451bb-9925-4de3-a95f-638ebaee28d7",
+		"name": "Namespace and Subdomain Creation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29825884"
+	},
+	"item": [
+		{
+			"name": "Obtain Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.access_token).to.exist;",
+							"    pm.expect(responseData.expires_in).to.exist;",
+							"    pm.expect(responseData.refresh_expires_in).to.exist;",
+							"    pm.expect(responseData.refresh_token).to.exist;",
+							"    pm.expect(responseData.token_type).to.exist;",
+							"    pm.expect(responseData.id_token).to.exist;",
+							"    pm.expect(responseData['not-before-policy']).to.exist;",
+							"    pm.expect(responseData.session_state).to.exist;",
+							"    pm.expect(responseData.scope).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Access token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Access token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Access token should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.access_token).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Expires in should be a number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.expires_in).to.be.a('number');",
+							"});",
+							"",
+							"pm.test(\"Refresh expires in should be a number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.refresh_expires_in).to.be.a('number');",
+							"});",
+							"",
+							"pm.test(\"Refresh token should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.refresh_token).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Token type should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.token_type).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Id token should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.id_token).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Not before policy should be a number\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData['not-before-policy']).to.be.a('number');",
+							"});",
+							"",
+							"pm.test(\"Session state should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.session_state).to.be.a('string');",
+							"});",
+							"",
+							"pm.test(\"Scope should be a string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData.scope).to.be.a('string');",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"access_token\", jsonData.access_token);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "server-api",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "bIygYeaLlQXlxyxM5Huzz23MIcSO84R3",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "K0ukku10",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://resonance.collab-cloud.eu/auth/realms/master/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"resonance",
+						"collab-cloud",
+						"eu"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"master",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"https://resonance.collab-cloud.eu/auth/realms/master/protocol/openid-connect/token\" \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=password\" \\\n  -d \"client_id=server-api\" \\\n  -d \"client_secret=bIygYeaLlQXlxyxM5Huzz23MIcSO84R3\" \\\n  -d \"username=admin\" \\\n  -d \"password=K0ukku10\" \\\n  -d \"scope=openid\""
+			},
+			"response": []
+		},
+		{
+			"name": "Create the Keycloak Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response body should have message for successful creation\", function () {",
+							"    pm.expect(pm.response.json().message).to.equal(\"Client created successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"testclient\",  // Should be a unique name\n    \"keycloak\": {\n        \"admin\": \"testadmin\",\n        \"password\": \"testadminpassword\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://130.188.160.1:8080/api/client",
+					"protocol": "http",
+					"host": [
+						"130",
+						"188",
+						"160",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST \"http://130.188.160.1:8080/api/client\" \\\n  -H \"Authorization: Bearer <ACCESS_TOKEN>\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n        \"name\": \"testclient\",\n        \"keycloak\": {\n            \"admin\": \"testadmin\",\n            \"password\": \"testadminpassword\"\n        }\n      }'"
+			},
+			"response": []
+		}
+	]
+}
